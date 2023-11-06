@@ -1,7 +1,16 @@
-.App {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #282c34;
+/* Remove default margin and padding from the body */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* This will remove scrollbars */
+}
+
+/* Ensure the Globe container takes up all available space */
+#Globe-container {
+  width: 100vw; /* 100% of the viewport width */
+  height: 100vh; /* 100% of the viewport height */
+  position: fixed; /* Fixes the position relative to the viewport */
+  top: 0;
+  left: 0;
 }

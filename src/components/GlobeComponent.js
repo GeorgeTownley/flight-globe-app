@@ -13,7 +13,7 @@ function GlobeComponent() {
   ]);
 
   return (
-    <div style={{ width: "100%", height: "600px" }}>
+    <div id="Globe-container" style={{ width: "100%", height: "600px" }}>
       <Globe
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
         bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
