@@ -10,7 +10,7 @@ html {
 #Globe-container {
   width: 100vw; /* 100% of the viewport width */
   height: 100vh; /* 100% of the viewport height */
-  position: fixed; /* Fixes the position relative to the viewport */
+  position: fixed;
   top: 0;
   left: 0;
 }
