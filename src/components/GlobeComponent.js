@@ -17,8 +17,8 @@ function GlobeComponent() {
     {
       startLat: 51.5074, // London latitude
       startLng: -0.1278, // London longitude
-      endLat: 48.8566, // Paris latitude
-      endLng: 2.3522, // Paris longitude
+      endLat: -34.3568,
+      endLng: 18.4735,
       color: "lightblue",
     },
   ]);
@@ -33,7 +33,7 @@ function GlobeComponent() {
         labelLat="lat"
         labelLng="lng"
         labelColor="color"
-        labelAltitude={0.01}
+        labelAltitude={0}
         labelSize="size"
         labelRotation={0}
         labelResolution={3}
@@ -45,8 +45,9 @@ function GlobeComponent() {
         arcsData={arcsData} // pass arcs data to the globe
         arcColor="color"
         arcAltitudeAutoScale={0.1}
-        arcStroke={0.5}
-        arcDashLength={0.3} // this will make the arc dashed
+        arcStroke={0.1}
+        arcAltitude={0.3}
+        arcDashLength={1} // this will make the arc dashed
         arcDashGap={0.1} // this will determine the gap between dashes
       />
     </div>
