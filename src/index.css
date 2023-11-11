@@ -1,15 +1,13 @@
-/* Remove default margin and padding from the body */
 body,
 html {
   margin: 0;
   padding: 0;
-  overflow: hidden; /* This will remove scrollbars */
+  overflow: hidden;
 }
 
-/* Ensure the Globe container takes up all available space */
 #Globe-container {
-  width: 100vw; /* 100% of the viewport width */
-  height: 100vh; /* 100% of the viewport height */
+  width: 100vw;
+  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
