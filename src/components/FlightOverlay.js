@@ -15,6 +15,7 @@ function FlightOverlay({ onFetchFlight }) {
         style={{ marginRight: "5px" }}
       />
       <button onClick={() => onFetchFlight(flightNumber)}>Submit</button>
+      <div></div>
       {/* More UI elements as needed */}
     </div>
   );
