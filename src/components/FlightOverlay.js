@@ -1,7 +1,41 @@
+// FlightOverlay.js
 import React, { useState } from "react";
 
-function FlightOverlay({ onFetchFlight }) {
+function FlightOverlay() {
   const [flightNumber, setFlightNumber] = useState("");
+  const [flightData, setFlightData] = useState(null);
+  const [error, setError] = useState("");
+
+  const fetchFlightData = () => {
+    setError(""); // Clear any previous errors
+    if (!flightNumber) {
+      setError("Please enter a flight number.");
+      return;
+    }
+
+    const API_KEY = process.env.REACT_APP_API_KEY;
+    const apiUrl = `http://api.aviationstack.com/v1/flights?access_key=${API_KEY}&flight_iata=${flightNumber.toUpperCase()}`;
+
+    fetch(apiUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            "Network response was not ok: " + response.statusText
+          );
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.error.info);
+        }
+        setFlightData(data); // Save the flight data to state
+      })
+      .catch((error) => {
+        setError(error.message);
+        setFlightData(null); // Clear the flight data on error
+      });
+  };
 
   return (
     <div
@@ -14,9 +48,17 @@ function FlightOverlay({ onFetchFlight }) {
         placeholder="Enter flight number"
         style={{ marginRight: "5px" }}
       />
-      <button onClick={() => onFetchFlight(flightNumber)}>Submit</button>
-      <div></div>
-      {/* More UI elements as needed */}
+      <button onClick={fetchFlightData}>Fetch Flight</button>
+      <div
+        style={{ marginTop: "20px", backgroundColor: "white", padding: "10px" }}
+      >
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        {flightData && (
+          <pre style={{ maxHeight: "200px", overflowY: "scroll" }}>
+            {JSON.stringify(flightData, null, 2)}
+          </pre>
+        )}
+      </div>
     </div>
   );
 }
