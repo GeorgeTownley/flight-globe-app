@@ -33,25 +33,25 @@ function GlobeComponent() {
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
         bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
         labelsData={labelsData}
-        labelText={(d) => d.text}
-        labelLat={(d) => d.lat}
-        labelLng={(d) => d.lng}
-        labelColor={(d) => d.color}
-        labelAltitude={0}
-        labelSize={(d) => d.size}
+        labelText="text"
+        labelLat="lat"
+        labelLng="lng"
+        labelColor="color"
+        labelAltitude={0.01}
+        labelSize="size"
         labelRotation={0}
         labelResolution={3}
         labelIncludeDot={true}
         labelDotRadius={0.1}
         labelDotOrientation="bottom"
         labelsTransitionDuration={1000}
-        arcsData={arcsData}
-        arcColor={(d) => d.color}
-        arcAltitudeAutoScale={0.1}
+        // Add arcs related properties
+        arcsData={arcsData} // pass arcs data to the globe
+        arcColor="color"
+        arcAltitudeAutoScale={0.2}
         arcStroke={0.1}
-        arcAltitude={(d) => d.arcAltitude}
-        arcDashLength={1}
-        arcDashGap={0.1}
+        arcDashLength={1} // this will make the arc dashed
+        arcDashGap={0} // this will determine the gap between dashes
       />
     </div>
   );
