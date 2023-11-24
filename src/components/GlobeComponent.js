@@ -18,7 +18,7 @@ function GlobeComponent() {
       startLat: 51.5074, // London latitude
       startLng: -0.1278, // London longitude
       endLat: -34.3568, // Cape of Good Hope latitude
-      endLng: 18.4735, // Cape of Good Hope longitude
+      endLng: 18.4734, // Cape of Good Hope longitude
       color: "lightblue",
     },
   ];
