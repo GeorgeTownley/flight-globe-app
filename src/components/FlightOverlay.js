@@ -13,10 +13,10 @@ function FlightOverlay() {
       return;
     }
 
-    const API_KEY = process.env.REACT_APP_API_KEY;
-    const apiUrl = `http://api.aviationstack.com/v1/flights?access_key=${API_KEY}&flight_iata=${flightNumber.toUpperCase()}`;
+    // This endpoint should match the proxy endpoint set up on your server
+    const proxyEndpoint = `/api/fetch-flight?flight_iata=${flightNumber.toUpperCase()}`;
 
-    fetch(apiUrl)
+    fetch(proxyEndpoint)
       .then((response) => {
         if (!response.ok) {
           throw new Error(
