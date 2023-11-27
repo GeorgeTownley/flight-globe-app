@@ -28,7 +28,6 @@ function GlobeComponent() {
       id="Globe-container"
       style={{ width: "100%", height: "100%", position: "relative" }}
     >
-      <FlightOverlay />
       <Globe
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
         bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
