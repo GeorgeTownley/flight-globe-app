@@ -2,21 +2,21 @@
 import React, { useState } from "react";
 
 function FlightOverlay() {
-  const [flightNumber, setFlightNumber] = useState("");
+  const [icaoCode, setIcaoCode] = useState(""); // Changed variable name to reflect ICAO code usage
   const [flightData, setFlightData] = useState(null);
   const [error, setError] = useState("");
 
   const fetchFlightData = () => {
     setError(""); // Clear any previous errors
-    if (!flightNumber) {
-      setError("Please enter a flight number.");
+    if (!icaoCode) {
+      setError("Please enter an ICAO code.");
       return;
     }
 
-    // This endpoint should match the proxy endpoint set up on your server
-    const proxyEndpoint = `/api/fetch-flight?flight_iata=${flightNumber.toUpperCase()}`;
+    // OpenSky Network API endpoint for all states
+    const openSkyEndpoint = `https://opensky-network.org/api/states/all?icao24=${icaoCode}`;
 
-    fetch(proxyEndpoint)
+    fetch(openSkyEndpoint)
       .then((response) => {
         if (!response.ok) {
           throw new Error(
@@ -26,10 +26,12 @@ function FlightOverlay() {
         return response.json();
       })
       .then((data) => {
-        if (data.error) {
-          throw new Error(data.error.info);
+        // OpenSky returns an array of states, we are interested in the first one
+        const flightInfo = data.states ? data.states[0] : null;
+        if (!flightInfo) {
+          throw new Error("No data found for this ICAO code.");
         }
-        setFlightData(data); // Save the flight data to state
+        setFlightData(flightInfo); // Save the flight data to state
       })
       .catch((error) => {
         setError(error.message);
@@ -43,9 +45,9 @@ function FlightOverlay() {
     >
       <input
         type="text"
-        value={flightNumber}
-        onChange={(e) => setFlightNumber(e.target.value)}
-        placeholder="Enter flight number"
+        value={icaoCode}
+        onChange={(e) => setIcaoCode(e.target.value)}
+        placeholder="Enter ICAO code"
         style={{ marginRight: "5px" }}
       />
       <button onClick={fetchFlightData}>Fetch Flight</button>
