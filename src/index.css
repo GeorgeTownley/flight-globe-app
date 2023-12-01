@@ -12,3 +12,39 @@ html {
   top: 0;
   left: 0;
 }
+
+/* Flight Overlay Styles */
+.flight-overlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  max-width: 30%; /* Adjust width as needed */
+}
+
+.flight-input {
+  width: calc(100% - 110px); /* Adjust input width, considering button width */
+  margin-right: 5px;
+}
+
+.fetch-button {
+  width: 100px; /* Set a fixed width for the button */
+}
+
+.flight-data {
+  margin-top: 20px;
+  background-color: white;
+  padding: 10px;
+  overflow-y: auto; /* Scrollbar appears if content is too long */
+  max-height: 400px; /* Adjust height as needed */
+  width: 100%; /* Full width of its parent element */
+  box-sizing: border-box;
+}
+
+.error-message {
+  color: red;
+}
+
+.flight-info {
+  text-align: left;
+}

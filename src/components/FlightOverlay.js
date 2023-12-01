@@ -1,9 +1,8 @@
-// FlightOverlay.js
 import React, { useState } from "react";
 
 function FlightOverlay() {
-  const [icaoCode, setIcaoCode] = useState(""); // Changed variable name to reflect ICAO code usage
-  const [flightData, setFlightData] = useState(null);
+  const [icaoCode, setIcaoCode] = useState("");
+  const [flightInfo, setFlightInfo] = useState(null);
   const [error, setError] = useState("");
 
   const fetchFlightData = () => {
@@ -13,7 +12,6 @@ function FlightOverlay() {
       return;
     }
 
-    // OpenSky Network API endpoint for all states
     const openSkyEndpoint = `https://opensky-network.org/api/states/all?icao24=${icaoCode}`;
 
     fetch(openSkyEndpoint)
@@ -26,39 +24,58 @@ function FlightOverlay() {
         return response.json();
       })
       .then((data) => {
-        // OpenSky returns an array of states, we are interested in the first one
-        const flightInfo = data.states ? data.states[0] : null;
-        if (!flightInfo) {
+        const flightData = data.states?.find((state) => state[0] === icaoCode);
+        if (!flightData) {
           throw new Error("No data found for this ICAO code.");
         }
-        setFlightData(flightInfo); // Save the flight data to state
+        // Map the response data to a more readable format
+        const formattedFlightInfo = {
+          icao24: flightData[0],
+          callsign: flightData[1]?.trim(),
+          origin_country: flightData[2],
+          time_position: new Date(flightData[3] * 1000).toLocaleString(),
+          last_contact: new Date(flightData[4] * 1000).toLocaleString(),
+          longitude: flightData[5],
+          latitude: flightData[6],
+          baro_altitude: flightData[7],
+          on_ground: flightData[8],
+          velocity: flightData[9],
+          true_track: flightData[10],
+          vertical_rate: flightData[11],
+          geo_altitude: flightData[13],
+          spi: flightData[15],
+          position_source: flightData[16],
+        };
+        setFlightInfo(formattedFlightInfo); // Save the formatted flight data to state
       })
       .catch((error) => {
         setError(error.message);
-        setFlightData(null); // Clear the flight data on error
+        setFlightInfo(null); // Clear the flight data on error
       });
   };
 
   return (
-    <div
-      style={{ position: "absolute", top: "10px", left: "10px", zIndex: 1000 }}
-    >
+    <div className="flight-overlay">
       <input
         type="text"
         value={icaoCode}
         onChange={(e) => setIcaoCode(e.target.value)}
         placeholder="Enter ICAO code"
-        style={{ marginRight: "5px" }}
+        className="flight-input"
       />
-      <button onClick={fetchFlightData}>Fetch Flight</button>
-      <div
-        style={{ marginTop: "20px", backgroundColor: "white", padding: "10px" }}
-      >
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {flightData && (
-          <pre style={{ maxHeight: "200px", overflowY: "scroll" }}>
-            {JSON.stringify(flightData, null, 2)}
-          </pre>
+      <button onClick={fetchFlightData} className="fetch-button">
+        Fetch Flight
+      </button>
+      <div className="flight-data">
+        {error && <p className="error-message">{error}</p>}
+        {flightInfo && (
+          <div className="flight-info">
+            {Object.entries(flightInfo).map(([key, value]) => (
+              <p key={key}>
+                <strong>{key.replace(/_/g, " ")}:</strong> {value}
+              </p>
+            ))}
+          </div>
         )}
       </div>
     </div>
