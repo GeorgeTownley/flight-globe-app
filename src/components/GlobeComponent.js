@@ -1,6 +1,5 @@
 import React from "react";
 import Globe from "react-globe.gl";
-import FlightOverlay from "./FlightOverlay"; // Ensure this import path is correct for your project structure
 
 function GlobeComponent() {
   const labelsData = [

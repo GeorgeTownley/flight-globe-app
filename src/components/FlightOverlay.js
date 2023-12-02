@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
 function FlightOverlay() {
-  const [callsign, setCallsign] = useState(""); // Changed from icaoCode to callsign
+  const [callsign, setCallsign] = useState("");
   const [flightInfo, setFlightInfo] = useState(null);
   const [error, setError] = useState("");
 
   const fetchFlightData = () => {
     setError(""); // Clear any previous errors
     if (!callsign) {
-      setError("Please enter a callsign."); // Changed the error message to callsign
+      setError("Please enter a callsign.");
       return;
     }
 
@@ -36,7 +36,7 @@ function FlightOverlay() {
         // Map the response data to a more readable format
         const formattedFlightInfo = {
           icao24: flightData[0],
-          callsign: flightData[1]?.trim(), // No need to change
+          callsign: flightData[1]?.trim(),
           origin_country: flightData[2],
           time_position: new Date(flightData[3] * 1000).toLocaleString(),
           last_contact: new Date(flightData[4] * 1000).toLocaleString(),
@@ -63,9 +63,9 @@ function FlightOverlay() {
     <div className="flight-overlay">
       <input
         type="text"
-        value={callsign} // Changed from icaoCode to callsign
-        onChange={(e) => setCallsign(e.target.value)} // Changed from setIcaoCode to setCallsign
-        placeholder="Enter callsign" // Changed the placeholder text to callsign
+        value={callsign}
+        onChange={(e) => setCallsign(e.target.value)}
+        placeholder="Enter callsign"
         className="flight-input"
       />
       <button onClick={fetchFlightData} className="fetch-button">
