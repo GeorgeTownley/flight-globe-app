@@ -19,9 +19,19 @@ html {
   top: 10px;
   left: 10px;
   z-index: 1000;
-  max-width: 30%; /* Adjust width as needed */
+  width: 300px; /* Adjust this width as needed */
+  font-family: "Roboto", sans-serif; /* Modern font */
 }
 
+.flight-data {
+  margin-top: 20px;
+  background-color: white;
+  padding: 10px;
+  width: 100%; /* Make sure this matches the parent width if necessary */
+  box-sizing: border-box; /* Include padding in width calculation */
+  overflow-y: auto; /* Only show scrollbar when necessary */
+  max-height: 600px; /* Adjust height as needed */
+}
 .flight-input {
   width: calc(100% - 110px); /* Adjust input width, considering button width */
   margin-right: 5px;
@@ -29,16 +39,6 @@ html {
 
 .fetch-button {
   width: 100px; /* Set a fixed width for the button */
-}
-
-.flight-data {
-  margin-top: 20px;
-  background-color: white;
-  padding: 10px;
-  overflow-y: auto; /* Scrollbar appears if content is too long */
-  max-height: 400px; /* Adjust height as needed */
-  width: 100%; /* Full width of its parent element */
-  box-sizing: border-box;
 }
 
 .error-message {

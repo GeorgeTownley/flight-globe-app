@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 
 function FlightOverlay() {
-  const [icaoCode, setIcaoCode] = useState("");
+  const [callsign, setCallsign] = useState(""); // Changed from icaoCode to callsign
   const [flightInfo, setFlightInfo] = useState(null);
   const [error, setError] = useState("");
 
   const fetchFlightData = () => {
     setError(""); // Clear any previous errors
-    if (!icaoCode) {
-      setError("Please enter an ICAO code.");
+    if (!callsign) {
+      setError("Please enter a callsign."); // Changed the error message to callsign
       return;
     }
 
-    const openSkyEndpoint = `https://opensky-network.org/api/states/all?icao24=${icaoCode}`;
+    // OpenSky API endpoint to fetch data by callsign
+    const openSkyEndpoint = `https://opensky-network.org/api/states/all?callsign=${callsign
+      .toUpperCase()
+      .trim()}`;
 
     fetch(openSkyEndpoint)
       .then((response) => {
@@ -24,14 +27,16 @@ function FlightOverlay() {
         return response.json();
       })
       .then((data) => {
-        const flightData = data.states?.find((state) => state[0] === icaoCode);
+        const flightData = data.states?.find(
+          (state) => state[1]?.trim() === callsign.toUpperCase().trim()
+        );
         if (!flightData) {
-          throw new Error("No data found for this ICAO code.");
+          throw new Error("No data found for this callsign.");
         }
         // Map the response data to a more readable format
         const formattedFlightInfo = {
           icao24: flightData[0],
-          callsign: flightData[1]?.trim(),
+          callsign: flightData[1]?.trim(), // No need to change
           origin_country: flightData[2],
           time_position: new Date(flightData[3] * 1000).toLocaleString(),
           last_contact: new Date(flightData[4] * 1000).toLocaleString(),
@@ -58,9 +63,9 @@ function FlightOverlay() {
     <div className="flight-overlay">
       <input
         type="text"
-        value={icaoCode}
-        onChange={(e) => setIcaoCode(e.target.value)}
-        placeholder="Enter ICAO code"
+        value={callsign} // Changed from icaoCode to callsign
+        onChange={(e) => setCallsign(e.target.value)} // Changed from setIcaoCode to setCallsign
+        placeholder="Enter callsign" // Changed the placeholder text to callsign
         className="flight-input"
       />
       <button onClick={fetchFlightData} className="fetch-button">
